@@ -10,6 +10,7 @@ function Posts() {
 
   const{app,db} = useContext(FirebaseContext)
   const[products,setProducts]= useState([])
+  const[sortedProducts,setSortedProducts]= useState([])
   const navigate= useNavigate()
   const {postDetails,setPostDetails}= useContext(PostContext)
   useEffect(() => {
@@ -22,15 +23,22 @@ function Posts() {
           id: product.id,
         }));
         setProducts(allPost);
-        console.log("allPost is:", allPost[1]); 
+        console.log("allPost is:", allPost[1]);
       } catch (error) {
         console.error("Error fetching products: ", error);
       }
     };
-
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    if (products.length > 0) {
+      const sortedArray = [...products].sort((a, b) => new Date(b.date) - new Date(a.date));
+      console.log("sortedArray",sortedArray)
+      setSortedProducts(sortedArray);
+    }
+  }, [products]);
+    
   return (
     <div className="postParentDiv">
 
@@ -69,22 +77,24 @@ function Posts() {
           <span>Fresh recommendations</span>
         </div>
         <div className="cards">
-          <div className="card">
+          {sortedProducts.map(product=>{ 
+         return <div className="card">
             <div className="favorite">
               <Heart></Heart>
             </div>
             <div className="image">
-              <img src="../../../Images/R15V3.jpg" alt="" />
+              <img src={product.imageURL} alt="" />
             </div>
             <div className="content">
-              <p className="rate">&#x20B9; 250000</p>
-              <span className="kilometer">Two Wheeler</span>
-              <p className="name"> YAMAHA R15V3</p>
+              <p className="rate">&#x20B9; {product.price}</p>
+              <span className="kilometer">{product.category}</span>
+              <p className="name"> {product.name}</p>
             </div>
             <div className="date">
-              <span>10/5/2021</span>
+              <span>{product.date}</span>
             </div>
-          </div>
+          </div> 
+            })}
         </div>
       </div>
     </div>
