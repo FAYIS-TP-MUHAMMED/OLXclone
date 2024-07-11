@@ -14,12 +14,12 @@ export default function Signup() {
   const [phone,setPhone]=useState('')
   const [password,setPassword]= useState('')
 
-  const {app} = useContext(FirebaseContext)
+  const {firebaseApp} = useContext(FirebaseContext)
   const navigate = useNavigate()
 
   const handleSignup =async(e)=>{
     e.preventDefault()
-    console.log({app})
+    // console.log({app})
     const auth = getAuth();
     try{
       createUserWithEmailAndPassword(auth, email, password).then(async(result)=>{

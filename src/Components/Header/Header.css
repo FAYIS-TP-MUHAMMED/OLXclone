@@ -94,8 +94,6 @@
   margin-right: 5px;
 }
 
-.language svg {
-}
 
 .span {
   text-decoration: none;
@@ -105,15 +103,95 @@
   font-weight: bolder;
   margin-right: 5px;
 }
-
-.loginPage hr {
+.loginPage hr, .child hr {
   margin: 0;
-  background-color: black;
-  height: 2px;
+  background-color: rgb(173, 170, 170);
+  height: 1px;
 }
 
 .loginPage a{
   text-decoration: none;
+}
+.loginPage span:hover{
+  cursor: pointer;
+}
+
+/* dropdown Style */
+.dropdownMain{
+  position: absolute;
+  margin-top: 10px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.dropdownContent{
+  width: 250px;
+  background-color: rgb(245, 239, 239);
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 0px;
+  margin-left: -130px;
+  
+}
+.children{
+  margin: 10px;
+}
+.child{
+  margin: 0px;
+  font-size: 17px;
+  color: #002f34;
+}
+.child p{
+  padding: 3px;
+}
+.child p:hover{
+  background-color: rgb(196, 236, 236);
+}
+ .child p span{
+  margin-right: 7px;
+  margin-left: 7px;
+}
+.child p span.heart{
+  margin-right: 2px;
+}
+.dropdownContent:hover{
+  cursor: pointer;
+}
+.dropdownContent p{
+  margin-bottom: 2px; 
+}
+.myProfile{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.avathar{
+  width: 45px;
+  height: 45px;
+  border: 1px solid;
+  border-radius: 100px;
+  margin-right: 5px; 
+}
+.profileName{
+  font-weight: bold;
+  color: #002f34;
+}
+.profileEdit{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #054e57;
+  border: 2px solid;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  padding: 7px
+}
+.profileEdit:hover{
+  background-color: white;
+  color: #054e57;
+}
+.profileEdit p{
+  margin: 0px;
 }
 
 .sellMenu {

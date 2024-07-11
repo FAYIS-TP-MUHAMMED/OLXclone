@@ -52,6 +52,7 @@ const navigate=useNavigate()
     <Fragment>
       <Header />
       <card>
+        <div className='wrapper'>
         <div className="centerDiv">
           <form>
             <label htmlFor="fname">Name</label>
@@ -91,6 +92,7 @@ const navigate=useNavigate()
             <br />
             <button onClick={handleSubmit} className="uploadBtn">upload and Submit</button>
           </form>
+        </div>
         </div>
       </card>
     </Fragment>
