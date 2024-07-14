@@ -17,6 +17,7 @@ import Login from './Pages/Login'
 import Create from './Pages/Create'
 import View from './Pages/ViewPost'
 import ViewPost from './Pages/ViewPost';
+import SearchResult from './Pages/searchResult';
 
 
 function App() { 
@@ -41,6 +42,7 @@ function App() {
         <Route exact path='/login' element={<Login/>}/>
         <Route path='/create' element={<Create/>}/>
         <Route path='/viewPost' element={<ViewPost/>}/>
+        <Route exact path='/searchResult' element={<SearchResult/>}/>
         </Routes>
       </Router>
       </Post>

@@ -1,10 +1,11 @@
 import React,{useEffect,useContext,useState} from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs,} from 'firebase/firestore';
 import Heart from '../../assets/Heart';
 import './Post.css';
 import { FirebaseContext } from '../../store/Context';
 import { useNavigate} from 'react-router-dom';
 import { PostContext} from '../../store/postContext';
+import firebase from 'firebase/compat/app';
 
 function Posts() {
 
@@ -38,6 +39,7 @@ function Posts() {
       setSortedProducts(sortedArray);
     }
   }, [products]);
+
     
   return (
     <div className="postParentDiv">

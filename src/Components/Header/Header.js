@@ -1,8 +1,11 @@
-import React,{useState,useContext} from 'react';
+import React,{useState,useContext,useEffect} from 'react';
 import {useNavigate} from 'react-router-dom'
 import { AuthContext } from '../../store/Context';
 import {FirebaseContext} from '../../store/Context';
-
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../../firebase/config';
+ 
+import SearchResultDisplay from '../SearchResult/SearchResultDisplay'; //for pop
 
 import './Header.css';
 import OlxLogo from '../../assets/OlxLogo';
@@ -19,6 +22,7 @@ import Settings from '../../assets/dropdownAssets/Settings';
 import Logout from '../../assets/dropdownAssets/LogoutSvg';
 
 import { signOut, getAuth } from 'firebase/auth';
+
 
 
 
@@ -39,11 +43,40 @@ function Header() {
      setUser(null)
      navigate('/login')
     }
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResult, setSearchResult] = useState([]);
+    
+      useEffect(() => {
+        const fetchListings = async () => {
+          try {
+            const listingRef = collection(db, 'products');
+            let q = listingRef;
+            if (searchQuery) {
+              q = query(listingRef, where('name', '>=', searchQuery), where('name', '<=', searchQuery + '\uf8ff'));
+            }
+            const snapshot = await getDocs(q);
+            const results = snapshot.docs.map(doc => ({
+              id: doc.id,
+              ...doc.data()
+            }));
+            console.log("Result: ",results)
+            setSearchResult(results);
+          } catch (error) {
+            console.error("ERROR WHILE SEARCH", error);
+          }
+        };
+    
+        fetchListings();
+      }, [searchQuery]);
+   
+
+ 
   
    
 
 
   return (
+    <div>
     <div className="headerParentDiv">
       <div className="headerChildDiv">
         <div className="brandName">
@@ -51,17 +84,20 @@ function Header() {
         </div>
         <div className="placeSearch">
           <Search></Search>
-          <input type="text" />
+          <input type="text" placeholder='India' />
           <Arrow></Arrow>
         </div>
         <div className="productSearch">
           <div className="input">
             <input
               type="text"
+              value={searchQuery}
+               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Find car,mobile phone and more..."
             />
           </div>
-          <div className="searchAction">
+          <div className="searchAction" onClick={(e)=>{if(searchQuery){
+                                            navigate('/searchResult')} }}>
             <Search color="#ffffff"></Search>
           </div>
         </div>
@@ -107,27 +143,6 @@ function Header() {
         <span onClick={()=>{navigate('/login')}}>Login</span>
       )}
       </div>
-         
-      {/* <div className="loginPage">
-      {user ? (
-        <div>
-          <div className='dropdown'> 
-          <span className='userName' onClick={handleUserDetailsClick}>
-            {user.displayName}
-            <hr/>
-          </span>
-           {showUserDetails && (
-            <div className="userDetails">
-              <p>User Profile</p>
-              <span onClick={handleLogout}>Logout</span>
-            </div>
-           )}
-          </div>
-        </div>
-      ) : (
-        <span onClick={()=>{navigate('/login')}}>Login</span>
-      )}
-      </div>  */}
       
         <div className="sellMenu">
           <SellButton></SellButton>
@@ -137,8 +152,12 @@ function Header() {
           </div>
         </div>
       </div>
+        
+    </div>
+    < SearchResultDisplay className='hidden' result={searchResult} />
     </div>
   );
-}
+ }
+
 
 export default Header;
